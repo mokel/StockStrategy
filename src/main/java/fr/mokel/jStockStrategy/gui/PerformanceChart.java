@@ -37,6 +37,8 @@ import org.jfree.data.time.TimeSeriesCollection;
 
 import fr.mokel.jStockStrategy.gui.util.ConstraintsBuilder;
 import fr.mokel.jStockStrategy.gui.util.EventManager;
+import fr.mokel.jStockStrategy.gui.util.EventManager.Event;
+import fr.mokel.jStockStrategy.gui.util.EventManager.EventType;
 import fr.mokel.jStockStrategy.indicator.IndicatorChart;
 import fr.mokel.jStockStrategy.indicator.IndicatorParameters;
 import fr.mokel.jStockStrategy.indicator.IndicatorType;

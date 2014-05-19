@@ -35,6 +35,7 @@ public class IndicatorPanel extends JPanel {
 		DefaultComboBoxModel<IndicatorType> indicModel = new DefaultComboBoxModel<IndicatorType>();
 		indicModel.addElement(IndicatorType.None);
 		indicModel.addElement(IndicatorType.SMA);
+		indicModel.addElement(IndicatorType.FFT);
 		indicModel.addElement(IndicatorType.CMA);
 		indicModel.addElement(IndicatorType.CCI);
 		indicatorCombo.setModel(indicModel);

@@ -2,6 +2,7 @@ package fr.mokel.jStockStrategy.indicator;
 
 import fr.mokel.jStockStrategy.indicator.CciIndicator.CciIndicatorParams;
 import fr.mokel.jStockStrategy.indicator.CrossMovingAverageIndicator.CrossMovingAverageIndicatorParams;
+import fr.mokel.jStockStrategy.indicator.FastFourierIndicator.FastFourierParams;
 import fr.mokel.jStockStrategy.indicator.MovingAverageIndicator.MovingAverageIndicatorParams;
 
 public enum IndicatorType {
@@ -10,7 +11,9 @@ public enum IndicatorType {
 	None("", null, false, false),
 	SMA("Moving Avg", MovingAverageIndicatorParams.class, true, false), CMA("Cross Moving Avg",
 			CrossMovingAverageIndicatorParams.class, false, false),
-	CCI("CCI", CciIndicatorParams.class, false, false);
+ CCI("CCI",
+			CciIndicatorParams.class, false, false), FFT("FFT", FastFourierParams.class, false,
+			false);
 	// @formatter:on
 	
 	private boolean onStockChart;

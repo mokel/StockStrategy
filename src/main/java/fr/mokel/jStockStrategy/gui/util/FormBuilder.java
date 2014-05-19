@@ -260,12 +260,4 @@ public class FormBuilder implements java.awt.event.ActionListener {
 		// Hide the dialog
 		dlg.setVisible(false);
 	}
-
-	public static void main(String[] args) {
-		FormBuilder rs = new FormBuilder();
-		PersonProfile pp = (PersonProfile) rs.getObject(null, "Simple Test",
-				PersonProfile.class.getName());
-		System.out.println("Person: " + pp.getFirstName() + " "
-				+ pp.getLastName());
-	}
 }
