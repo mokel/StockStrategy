@@ -30,7 +30,7 @@ public class MainFrame extends JFrame {
 	public static MainFrame INTANCE;
 
 	public MainFrame() {
-		setTitle("jTa");
+		setTitle("jStockStrategy");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLayout(new GridBagLayout());
 		add(new MainPanel(), new ConstraintsBuilder().fill(GridBagConstraints.BOTH).build());

@@ -2,8 +2,8 @@ package fr.mokel.jStockStrategy.strategy;
 
 import java.util.List;
 
-import fr.mokel.jStockStrategy.indicator2.CciIndicator;
-import fr.mokel.jStockStrategy.indicator2.CciIndicator.CciIndicatorParams;
+import fr.mokel.jStockStrategy.indicator.CciIndicator;
+import fr.mokel.jStockStrategy.indicator.CciIndicator.CciIndicatorParams;
 import fr.mokel.jStockStrategy.model.DayValue;
 
 public class CciStrategy extends Strategy2 {

@@ -7,7 +7,6 @@ import java.util.Observable;
 public class Stock extends Observable {
 
 	private String code;
-	private Chart barChart;
 	private List<DayValue> list;
 
 
@@ -15,17 +14,6 @@ public class Stock extends Observable {
 		this.code = code;
 	}
 
-	public Chart getBarChart() {
-		return barChart;
-	}
-
-	public void setBarChart(Chart barChart) {
-		this.barChart = barChart;
-		setChanged();
-		notifyObservers("DATA");
-	}
-	
-	
 
 //	public List<Indicator> getStrategies() {
 //		if(strategies == null) {

@@ -38,6 +38,7 @@ public class IndicatorPanel extends JPanel {
 		indicModel.addElement(IndicatorType.FFT);
 		indicModel.addElement(IndicatorType.CMA);
 		indicModel.addElement(IndicatorType.CCI);
+		indicModel.addElement(IndicatorType.DERIVATIVE);
 		indicatorCombo.setModel(indicModel);
 		add(new JLabel("Indicators: "), "gaptop 3");
 		add(indicatorCombo);

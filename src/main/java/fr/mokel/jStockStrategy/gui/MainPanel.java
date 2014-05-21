@@ -32,6 +32,7 @@ public class MainPanel extends JPanel {
 	public MainPanel() {
 		setLayout(new MigLayout());
 		stockField = new JXTextField("yahoo code");
+		stockField.setText("BNP.PA");
 		stockField.addActionListener(new StockListener());
 		add(new JLabel("Yahoo stock code:"));
 		add(stockField, "wrap");

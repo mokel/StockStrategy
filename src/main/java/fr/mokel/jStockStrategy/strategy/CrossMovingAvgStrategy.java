@@ -2,8 +2,8 @@ package fr.mokel.jStockStrategy.strategy;
 
 import java.util.List;
 
-import fr.mokel.jStockStrategy.indicator2.CrossMovingAverageIndicator;
-import fr.mokel.jStockStrategy.indicator2.CrossMovingAverageIndicator.CrossMovingAverageIndicatorParams;
+import fr.mokel.jStockStrategy.indicator.CrossMovingAverageIndicator;
+import fr.mokel.jStockStrategy.indicator.CrossMovingAverageIndicator.CrossMovingAverageIndicatorParams;
 import fr.mokel.jStockStrategy.model.DayValue;
 
 public class CrossMovingAvgStrategy extends Strategy2 {

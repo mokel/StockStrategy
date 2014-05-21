@@ -29,7 +29,7 @@ import fr.mokel.jStockStrategy.model.DayValue;
 public class YahooDataRetriever extends Observable implements
 		MarketDataRetriever {
 
-	private static final int DEFAULT_LENGTH = 28;
+	private static final int DEFAULT_LENGTH = 2;
 
 	private int nbMonth = DEFAULT_LENGTH;
 
