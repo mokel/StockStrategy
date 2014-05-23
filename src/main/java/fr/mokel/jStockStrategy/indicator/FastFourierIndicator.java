@@ -30,12 +30,17 @@ public class FastFourierIndicator implements IndicatorChart {
 		}
 		FastFourierTransformer fourier = new FastFourierTransformer(DftNormalization.STANDARD);
 		Complex[] res = fourier.transform(data, TransformType.FORWARD);
+
 		List<DayValue> fft = new ArrayList<DayValue>();
-		// for (int i = 0; i < res.length; i++) {
-		// DayValue dv = new DayValue(res[i].getReal(), derivative.get(
-		// (derivative.size() - power2Rest) + i).getDate());
-		// fft.add(dv);
-		// }
+
+		for (int i = 0; i < res.length; i++) {
+			double real = res[i].getReal();
+			double imag = res[i].getImaginary();
+			double omk = 2 * Math.PI * (i - 1) / res.length;
+			DayValue dv = new DayValue(res[i].getReal(), derivative.get(
+					(derivative.size() - power2Rest) + i).getDate());
+			fft.add(dv);
+		}
 
 		return fft;
 	}
