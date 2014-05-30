@@ -6,8 +6,8 @@ import java.util.List;
 
 import org.junit.Assert;
 
-import fr.mokel.jStockStrategy.functions.Average;
-import fr.mokel.jStockStrategy.model.DayValue;
+import fr.mokel.jstockstrategy.functions.Average;
+import fr.mokel.jstockstrategy.model.DayValue;
 
 public class AverageTest {
 
