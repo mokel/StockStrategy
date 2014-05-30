@@ -8,5 +8,5 @@ import fr.mokel.jstockstrategy.model.DayValue;
 
 public interface MarketDataRetriever {
 
-	List<DayValue> getData(String code, LocalDate date);
+	List<DayValue> getPrices(String code, LocalDate from, LocalDate to);
 }

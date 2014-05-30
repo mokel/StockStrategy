@@ -1,19 +1,18 @@
 package fr.mokel.jstockstrategy.model;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 
-public class DayValue implements Serializable {
-
-	private static final long serialVersionUID = 1L;
+public class DayValue {
 
 	private double value;
 	private LocalDate date;
 	private double high;
 	private double low;
 	private double close;
+	private double volume;
+	private double open;
 
 	public DayValue() {
 	}
@@ -64,6 +63,26 @@ public class DayValue implements Serializable {
 
 	public void setClose(double close) {
 		this.close = close;
+	}
+
+	public double getVolume() {
+		return volume;
+	}
+
+	public void setVolume(double volume) {
+		this.volume = volume;
+	}
+
+	public double getOpen() {
+		return open;
+	}
+
+	public void setOpen(double open) {
+		this.open = open;
+	}
+
+	public void setDateString(String dateString) {
+		this.date = LocalDate.parse(dateString);
 	}
 
 	@Override

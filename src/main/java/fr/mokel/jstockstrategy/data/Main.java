@@ -3,23 +3,21 @@ package fr.mokel.jstockstrategy.data;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Properties;
 
 import fr.mokel.jstockstrategy.model.DayValue;
+import fr.mokel.jstockstrategy.utils.LogUtils;
 
 public class Main {
-
-    protected static Properties props = new Properties();
 
     /**
      * @param args
      * @throws IOException 
      */
     public static void main(String[] args) throws IOException {
-    	
-    	System.out.println(System.getProperty("java.class.path"));
+		LogUtils.configure();
     	YahooDataRetriever m = new YahooDataRetriever();
-		List<DayValue> c = m.getData("ACA.PA", LocalDate.now());
+		List<DayValue> c = m.getPrices("ACA.PA", LocalDate.now().minusMonths(20), LocalDate.now()
+				.minusDays(20));
     	System.out.println(c);
     }
 }
