@@ -13,7 +13,7 @@ import org.apache.commons.io.IOUtils;
 
 
 
-public class Retriever {
+class HttpLoader {
     
     private HttpClient client;
     
@@ -21,11 +21,11 @@ public class Retriever {
     
     private String webPage;
     
-    public Retriever(String url) {
+    public HttpLoader(String url) {
         this(null, 0, null, null, url);
     }
     
-    public Retriever(String proxyUrl, int port, String login, String pass, String url) {
+    public HttpLoader(String proxyUrl, int port, String login, String pass, String url) {
         client = new HttpClient();
         this.url = url;
         if(login != null && pass != null){

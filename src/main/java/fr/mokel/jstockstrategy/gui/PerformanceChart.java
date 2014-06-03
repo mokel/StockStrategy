@@ -45,12 +45,6 @@ import fr.mokel.jstockstrategy.indicator.IndicatorType;
 import fr.mokel.jstockstrategy.model.DayValue;
 import fr.mokel.jstockstrategy.strategy.Run.BackTestResult;
 
-/**
- * Manager für Performances Graphs
- * 
- * @author vincent.mokel
- * @version $Revision: 1.1 $ $Date: 2013/11/18 08:29:58 $ $Author: mokel $
- */
 public class PerformanceChart extends JPanel {
 
 	/**	 */
@@ -66,14 +60,9 @@ public class PerformanceChart extends JPanel {
 	ChartPanel chartPanel;
 	JLabel info = new JLabel("info");
 
-
-	private BackTestResult results;
-	private int index = 0;
-
 	private List<DayValue> stockData;
 
 	/**
-	 * @return a Combined Plot Graph
 	 */
 	public PerformanceChart() {
 		setLayout(new GridBagLayout());
@@ -101,7 +90,6 @@ public class PerformanceChart extends JPanel {
 
 			@Override
 			public void chartMouseClicked(ChartMouseEvent event) {
-				// TODO Auto-generated method stub
 
 			}
 		});
@@ -112,7 +100,7 @@ public class PerformanceChart extends JPanel {
 			@Override
 			public void eventOccured(Event e) {
 				if (stockData != null) {
-				Object[] args = e.getArgs();
+					Object[] args = e.getArgs();
 					IndicatorType iType = (IndicatorType) args[0];
 					IndicatorParameters params = (IndicatorParameters) args[1];
 					addIndicator(iType, params);
@@ -130,11 +118,6 @@ public class PerformanceChart extends JPanel {
 		TimeSeriesCollection ds = createDs(indicChart, iType.getLabel());
 		XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
 		renderer.setBaseShapesVisible(false);
-		// renderer.setSeriesPaint(0, Colo);
-		// renderer.setBaseToolTipGenerator(new StandardXYToolTipGenerator(
-		// StandardXYToolTipGenerator.DEFAULT_TOOL_TIP_FORMAT,
-		// new SimpleDateFormat("dd-MM-yyyy"), new DecimalFormat(
-		// "0,000.00")));
 		NumberAxis axis = new NumberAxis(iType.getLabel());
 		axis.setAutoRangeIncludesZero(false);
 		plot.setDataset(0, ds);
@@ -151,11 +134,6 @@ public class PerformanceChart extends JPanel {
 		TimeSeriesCollection ds = createDs(indicChart, iType.getLabel());
 		XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
 		renderer.setBaseShapesVisible(false);
-		// renderer.setSeriesPaint(0, Colo);
-		// renderer.setBaseToolTipGenerator(new StandardXYToolTipGenerator(
-		// StandardXYToolTipGenerator.DEFAULT_TOOL_TIP_FORMAT,
-		// new SimpleDateFormat("dd-MM-yyyy"), new DecimalFormat(
-		// "0,000.00")));
 		NumberAxis axis = new NumberAxis(iType.getLabel());
 		stockPlot.setDataset(0, ds);
 		stockPlot.setRenderer(0, renderer);
@@ -171,79 +149,46 @@ public class PerformanceChart extends JPanel {
 
 	public void setStock(List<DayValue> stockValues) {
 		stockData = stockValues;
-		stockPlot = new XYPlot();
+		if (stockPlot == null) {
+			stockPlot = new XYPlot();
+			combinedPlot.add(stockPlot, 3);
+		}
 		DateAxis axisDate = new DateAxis("Date");
-		Font theFont = axisDate.getTickLabelFont();
+		// Font theFont = axisDate.getTickLabelFont();
 		axisDate.setTickLabelFont(new Font("Arial", Font.PLAIN, 0));
 		combinedPlot.setDomainAxis(axisDate);
 		TimeSeriesCollection stockDs = createDs(stockData, "Stock");
 		XYAreaRenderer renderer = new XYAreaRenderer();
-		GradientPaint p = new GradientPaint(new Point(), Color.BLUE,
-				new Point(), new Color(0, 137, 255, 30));
+		GradientPaint p = new GradientPaint(
+				new Point(),
+				Color.BLUE,
+				new Point(),
+				new Color(0, 137, 255, 30));
 		p = renderer.getGradientTransformer().transform(p,
 				renderer.getBaseShape());
 		renderer.setSeriesPaint(0, p);
 		renderer.setBaseToolTipGenerator(new StandardXYToolTipGenerator(
 				StandardXYToolTipGenerator.DEFAULT_TOOL_TIP_FORMAT,
-				new SimpleDateFormat("dd-MM-yyyy"), new DecimalFormat(
-						"0,000.00")));
+				new SimpleDateFormat("dd-MM-yyyy"),
+				new DecimalFormat("0,000.00")));
 		NumberAxis axis = new NumberAxis("Stock");
 		axis.setAutoRangeIncludesZero(false);
-		stockPlot.setDataset(index, stockDs);
-		stockPlot.setRenderer(index, renderer);
-		stockPlot.setRangeAxis(index, axis);
+		stockPlot.setDataset(0, stockDs);
+		stockPlot.setRenderer(0, renderer);
+		stockPlot.setRangeAxis(0, axis);
 		stockPlot.setBackgroundPaint(Color.GRAY);
-		combinedPlot.add(stockPlot, 3);
-		index++;
 	}
 
 	public void setData(BackTestResult res) {
-		results = res;
-		ExtendedCategoryAxis axisDate = new ExtendedCategoryAxis(
-				"Workflow Date");
+		ExtendedCategoryAxis axisDate = new ExtendedCategoryAxis("Workflow Date");
 		Font theFont = axisDate.getTickLabelFont();
 		axisDate.setTickLabelFont(new Font("Arial", Font.PLAIN, 0));
 		axisDate.setSubLabelFont(theFont);
 		axisDate.setCategoryLabelPositions(CategoryLabelPositions
 				.createUpRotationLabelPositions(Math.PI / 6.0));
-		// int freq = 1;
-		// int size = results.getStockValues().size();
-		// if (size > axisLabelThreshold) {
-		// freq = size / axisLabelThreshold + 1;
-		// }
-		// for (int i = 0; i < pDataset.getColumnCount(); i++) {
-		// if (i % freq == 0) {
-		// axisDate.addSubLabel(pDataset.getColumnKey(i),
-		// DateUtils.getShortFormat((Date) pDataset.getColumnKey(i)));
-		// }
-		// }
-
-		// plot.setDomainAxis(axisDate);
-		// int index = 0;
-		// CategoryDataset stockDs = createDs(res.getStockValues(), "Stock");
-		// LineAndShapeRenderer renderer = new LineAndShapeRenderer();
-		// renderer.setBasePaint(Color.BLUE);
-		// renderer.setBaseShapesVisible(false);
-		// NumberAxis axis = new NumberAxis("StockL");
-		// plot.setDataset(index, stockDs);
-		// plot.setRenderer(index, renderer);
-		// plot.setRangeAxis(index, axis);
-		// index++;
-		//
-		// CategoryDataset perfDs = createDs(res.getTotalPerformanceValues(),
-		// "Perf");
-		// renderer = new LineAndShapeRenderer();
-		// renderer.setBasePaint(Color.RED);
-		// renderer.setBaseShape(ShapeUtilities.createRegularCross(4, 1));
-		// axis = new NumberAxis("PerfL");
-		// plot.setDataset(index, perfDs);
-		// plot.setRenderer(index, renderer);
-		// plot.setRangeAxis(index, axis);
-		// plot.mapDatasetToRangeAxis(1, 1);
 	}
 
-	private TimeSeriesCollection createDs(List<DayValue> stockValues,
-			String category) {
+	private TimeSeriesCollection createDs(List<DayValue> stockValues, String category) {
 		TimeSeries ds = new TimeSeries(category);
 		for (DayValue dayValue : stockValues) {
 			ds.add(new Day(dayValue.getJavaUtilDate()), dayValue.getValue());

@@ -8,10 +8,12 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
 import fr.mokel.jstockstrategy.gui.util.ConstraintsBuilder;
+import fr.mokel.jstockstrategy.utils.LogUtils;
 
 public class MainFrame extends JFrame {
 
 	public static void main(String[] args) {
+		LogUtils.configure();
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				try {

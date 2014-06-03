@@ -10,14 +10,15 @@ import fr.mokel.jstockstrategy.utils.LogUtils;
 public class Main {
 
     /**
-     * @param args
-     * @throws IOException 
-     */
-    public static void main(String[] args) throws IOException {
+	 * @param args
+	 * @throws IOException
+	 * @throws MarketDataException
+	 */
+	public static void main(String[] args) throws MarketDataException {
 		LogUtils.configure();
-    	YahooDataRetriever m = new YahooDataRetriever();
-		List<DayValue> c = m.getPrices("ACA.PA", LocalDate.now().minusMonths(20), LocalDate.now()
-				.minusDays(20));
+		MarketDataServices s = new MarketDataServices();
+		List<DayValue> c = s.getPrices("ACA.PA", LocalDate.now().minusMonths(20), LocalDate.now()
+				.minusDays(1));
     	System.out.println(c);
     }
 }

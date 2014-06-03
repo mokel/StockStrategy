@@ -1,5 +1,6 @@
 package fr.mokel.jstockstrategy.data;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.NumberFormat;
@@ -17,10 +18,15 @@ import au.com.bytecode.opencsv.bean.CsvToBean;
 import au.com.bytecode.opencsv.bean.HeaderColumnNameTranslateMappingStrategy;
 import fr.mokel.jstockstrategy.model.DayValue;
 
-public class CsvHelper {
+class CsvHelper {
 
 	static void writeCsv(String code, List<DayValue> prices) {
 		String fileName = createFileName(code);
+		// delete if exists
+		File oldCsv = new File(fileName);
+		if (oldCsv.exists()) {
+			oldCsv.delete();
+		}
 		List<String[]> bars = new ArrayList<String[]>();
 		bars.add(getHeaders());
 		for (DayValue dayValue : prices) {
@@ -29,7 +35,7 @@ public class CsvHelper {
 		}
 		FileWriter fw;
 		try {
-			fw = new FileWriter(fileName);
+			fw = new FileWriter(fileName, false);
 			CSVWriter w = new CSVWriter(fw, ',', (char) 0);
 			w.writeAll(bars);
 			w.flush();

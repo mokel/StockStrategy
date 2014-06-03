@@ -6,7 +6,6 @@ import java.io.InputStream;
 import java.io.StringReader;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Observable;
 import java.util.Properties;
 
 import org.apache.commons.lang.StringUtils;
@@ -15,8 +14,7 @@ import org.apache.log4j.Logger;
 import au.com.bytecode.opencsv.CSVReader;
 import fr.mokel.jstockstrategy.model.DayValue;
 
-public class YahooDataRetriever extends Observable implements
-		MarketDataRetriever {
+class YahooDataRetriever implements MarketDataRetriever {
 
 	private static final int DEFAULT_LENGTH = 5 * 12;
 
@@ -37,39 +35,27 @@ public class YahooDataRetriever extends Observable implements
 		this.nbMonth = nbMonth;
 	}
 
-	// public void getDataAsync(String code, LocalDate date, Observer o) {
-	// deleteObservers();
-	// addObserver(o);
-	// Runnable run = new Runnable() {
-	// @Override
-	// public void run() {
-	// List<DayValue> result = getData(code, from, to);
-	// setChanged();
-	// notifyObservers(result);
-	// }
-	// };
-	// Thread t = new Thread(run);
-	// t.start();
-	// }
-
 	@Override
-	public List<DayValue> getPrices(String code, LocalDate from, LocalDate to) {
+	public List<DayValue> getPrices(String code) {
 		CSVReader read = null;
-			Retriever ret;
-			String url = createUrl(code, from, to);
-			logger.info("Fetch: " + url);
-			String proxy = YahooDataRetriever.proxyProps.getProperty("proxy.url");
+		HttpLoader ret;
+		LocalDate to = LocalDate.now();
+		LocalDate from = to.minusMonths(nbMonth);
+		String url = createUrl(code, from, to);
+		logger.info("Fetch: " + url);
+		String proxy = proxyProps.getProperty("proxy.url");
 		if (StringUtils.isNotBlank(proxy)) {
-				Integer port = Integer.valueOf(YahooDataRetriever.proxyProps.getProperty("proxy.port")).intValue();
-				String login =YahooDataRetriever.proxyProps.getProperty("proxy.login");
-				String password =YahooDataRetriever.proxyProps.getProperty("proxy.password"); 
-				ret = new Retriever(proxy,port,login,password, url);
+			Integer port = Integer.valueOf(proxyProps.getProperty("proxy.port")).intValue();
+			String login = proxyProps.getProperty("proxy.login");
+			String password = proxyProps.getProperty("proxy.password");
+				ret = new HttpLoader(proxy,port,login,password, url);
 			} else {
-				ret = new Retriever(url);
+				ret = new HttpLoader(url);
 			}
-			ret.load();
-			String data = ret.getWebPage();
-			read = new CSVReader(new StringReader(data));
+		logger.info("Load History with Yahoo");
+		ret.load();
+		String data = ret.getWebPage();
+		read = new CSVReader(new StringReader(data));
 		List<DayValue> list = CsvHelper.readCsv(read);
 		list = CsvHelper.reverseList(list);
 		return list;
