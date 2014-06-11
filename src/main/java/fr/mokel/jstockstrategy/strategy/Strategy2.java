@@ -39,6 +39,9 @@ public abstract class Strategy2 {
 		return trades;
 	}
 
+	public DayValue getEntryPoint() {
+		return entryPoint;
+	}
 	private boolean hasMaxWin(DayValue dayValue) {
 		if (maxWin != null && entryPoint != null) {
 			return new Trade(entryPoint, dayValue).getPerformance() > (1 + maxWin.doubleValue());
@@ -57,6 +60,17 @@ public abstract class Strategy2 {
 		}
 		return false;
 	}
+
+	public Trade computeFutureTrade() {
+		if(entryPoint == null) {
+			return null;
+		} else {
+			DayValue exit = computeExitPoint(entryPoint);
+			return new Trade(entryPoint, exit);
+		}
+	}
+
+	abstract DayValue computeExitPoint(DayValue entryPoint);
 
 	void preProcess(List<DayValue> list) {
 

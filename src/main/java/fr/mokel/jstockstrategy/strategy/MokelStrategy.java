@@ -39,6 +39,16 @@ public class MokelStrategy extends Strategy2 {
 		return yesterday.getValue() > 100 && today.getValue() <= 100;
 	}
 
+	/**
+	 * exit point is when cci = 100
+	 */
+	@Override
+	DayValue computeExitPoint(DayValue entryPoint) {
+		// get last cci value
+		DayValue lastCci = cci.get(cci.size() - 1);
+		return null;
+	}
+
 	private boolean isDataNull() {
 		return yesterday == null || today == null;
 	}
@@ -61,6 +71,7 @@ public class MokelStrategy extends Strategy2 {
 		// 49 - (50 -1) = 0
 	}
 
+	@Override
 	int getMinDataLength() {
 		return Math.max(params.getCciLength(), params.getLongSMALength());
 	}
@@ -77,4 +88,5 @@ public class MokelStrategy extends Strategy2 {
 		p.setAverageSmall(params.getShortSMALength());
 		// cmaIndicator = new CrossMovingAverageIndicator().process(list, p);
 	}
+
 }

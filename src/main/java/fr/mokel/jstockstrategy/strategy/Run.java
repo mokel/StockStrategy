@@ -9,29 +9,27 @@ import java.util.List;
 
 import org.apache.commons.math3.stat.descriptive.SummaryStatistics;
 
-import fr.mokel.jstockstrategy.data.YahooDataRetriever;
+import fr.mokel.jstockstrategy.data.MarketDataException;
+import fr.mokel.jstockstrategy.data.MarketDataServices;
 import fr.mokel.jstockstrategy.model.DayValue;
 import fr.mokel.jstockstrategy.model.Stock;
+import fr.mokel.jstockstrategy.utils.LogUtils;
 
 public class Run {
-//http://trac.erichseifert.de/gral/wiki
-//http://stackoverflow.com/questions/7206542/jfreechart-interactive-chart-editing-tranforming-mouse-coordinates-into-series
-//http://stackoverflow.com/questions/6337851/jfreechart-general-issue-on-the-possibility-of-interactlively-modify-a-displayed
-	public static void main(String[] args) {
-		YahooDataRetriever m = new YahooDataRetriever();
-		List<DayValue> c = m.getData("BNP.PA", LocalDate.now());
+	// http://trac.erichseifert.de/gral/wiki
+	// http://stackoverflow.com/questions/7206542/jfreechart-interactive-chart-editing-tranforming-mouse-coordinates-into-series
+	// http://stackoverflow.com/questions/6337851/jfreechart-general-issue-on-the-possibility-of-interactlively-modify-a-displayed
+	public static void main(String[] args) throws MarketDataException {
+		LogUtils.configure();
+		MarketDataServices mds = new MarketDataServices();
+		List<DayValue> c = mds.getPrices("BNP.PA", LocalDate.now().minusYears(2), LocalDate.now()
+				.minusDays(1));
 		Stock aca = new Stock("BNP.PA");
 		aca.setList(c);
-		// for (int small = 1; small <= 50; small++) {
-//		for (int small = 4; small <= 6; small++) {
-			// for (int big = small + 3; big <= 200; big++) {
 		StrategyParamters p = createParams(5, 5, 5);// (20,50);
-			BackTestResult res = backtest(aca, p);
-			System.out.println(res);
-		// if (res.totalPerfo > 0d && res.nbPositif > res.nbNegatif) {
-				 System.out.println(res.toCsv());
-		// }
-	//	}
+		BackTestResult res = backtest(aca, p);
+		System.out.println(res);
+		System.out.println(res.toCsv());
 
 	}
 
@@ -51,10 +49,12 @@ public class Run {
 		BackTestResult res = new BackTestResult(stock, s.getParameters());
 		List<Trade> trades = s.process(stock);
 		res.computeInfos(trades);
+		res.lastEntryPoint = s.getEntryPoint();
 		return res;
 	}
 
 	public static class BackTestResult {
+		DayValue lastEntryPoint;
 		List<Trade> trades;
 		List<DayValue> perfos = new ArrayList<DayValue>();
 		List<DayValue> totalPerfos = new ArrayList<DayValue>();
@@ -88,12 +88,16 @@ public class Run {
 						.append(" perf: ").append(f.format(t.getPerformance())).append("\t")
 						.append(System.lineSeparator());
 			}
+			if (lastEntryPoint != null) {
+				sb.append("Last entry point: ").append(lastEntryPoint);
+			}
 			return sb.toString();
 		}
 
 		public List<DayValue> getPerformanceValues() {
 			return perfos;
-		}		
+		}
+
 		public List<DayValue> getTotalPerformanceValues() {
 			return totalPerfos;
 		}
@@ -109,7 +113,7 @@ public class Run {
 				totalPerfos.add(new DayValue(totalPerfo, trades.get(0).getEntry().getDate()));
 				for (Trade t : trades) {
 					double perfo = t.getPerformance();
-					LocalDate exitDate =t.getExit().getDate();
+					LocalDate exitDate = t.getExit().getDate();
 					perfos.add(new DayValue(perfo, exitDate));
 					totalPerfo *= perfo;
 					totalPerfos.add(new DayValue(totalPerfo, exitDate));
