@@ -19,11 +19,12 @@ public class LoadDataTest {
 	}
 
 	@Test
-	public void dayValueListTest() throws FileNotFoundException, IOException {
+	public void dayValueListTest() throws FileNotFoundException, IOException, MarketDataException {
 		MarketDataServices m = new MarketDataServices();
-		List<DayValue> c = m.getPrices("ACA.PA", LocalDate.now().minusMonths(20).minusDays(3),
-				LocalDate.now()
-				.minusDays(20));
+		List<DayValue> c = m.getPrices(
+									"BNP.PA", 
+									LocalDate.now().minusMonths(20).minusDays(3),
+									LocalDate.now().minusDays(20));
 		System.out.println(c);
 	}
 

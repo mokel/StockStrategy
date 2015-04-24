@@ -28,10 +28,12 @@ class HttpLoader {
     public HttpLoader(String proxyUrl, int port, String login, String pass, String url) {
         client = new HttpClient();
         this.url = url;
-        if(login != null && pass != null){
-            client.getHostConfiguration().setProxy(proxyUrl, port);
-            Credentials defaultcreds = new UsernamePasswordCredentials(login, pass);
-            client.getState().setProxyCredentials(AuthScope.ANY, defaultcreds);
+        if(proxyUrl != null) {
+        	client.getHostConfiguration().setProxy(proxyUrl, port);
+        	if(login != null){
+        		Credentials defaultcreds = new UsernamePasswordCredentials(login, pass);
+        		client.getState().setProxyCredentials(AuthScope.ANY, defaultcreds);
+        	}
         }
     }
 
